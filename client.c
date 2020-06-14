@@ -5,7 +5,7 @@
 #include <uv.h>
 
 int *fd;
-
+const char filename [] = "file.txt";
 uv_fs_t req;
 uv_fs_t req_read;
 uv_fs_t write_req;
@@ -35,7 +35,7 @@ void poll1_cb(uv_fs_poll_t *handle){
 int main(int argc, char **argv) {
 	struct sockaddr_in dest;
     
-    int pom = uv_fs_open(uv_default_loop(), &req, "file.txt", O_RDWR | O_APPEND, 0, NULL);
+    int pom = uv_fs_open(uv_default_loop(), &req, filename, O_RDWR | O_APPEND, 0, NULL);
     fd=&pom; 
     
     uv_tcp_t* socket = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
@@ -49,8 +49,8 @@ int main(int argc, char **argv) {
     uv_tcp_connect(connect, socket, (const struct sockaddr*)&dest, NULL);
     stream = connect->handle;
     
-    //uv_timer_start(&timer1, timer1_cb, 15000, 10000);
-    uv_fs_poll_start(&poll1, (uv_fs_poll_cb) poll1_cb, "file.txt", 3000);
+    uv_timer_start(&timer1, timer1_cb, 0, 10000);
+    uv_fs_poll_start(&poll1, (uv_fs_poll_cb) poll1_cb, filename, 3000);
 
     uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 }
