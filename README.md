@@ -13,8 +13,11 @@ Aplikacija je jednostavna i da bi bila funckionalna trebalo bi još puno poradit
 # Upute za kompajliranje
 
 gcc -o client client.c /usr/local/lib/libuv.a -pthread
+
 ./client
 
+
 gcc -o server server.c /usr/local/lib/libuv.a -pthread
+
 ./server
 
