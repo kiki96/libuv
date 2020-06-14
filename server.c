@@ -5,6 +5,7 @@
 #include <uv.h>
 
 int *fd;
+const char filename [] = "backup.bak";
 
 uv_fs_t req;
 uv_fs_t write_req;
@@ -62,7 +63,7 @@ void on_new_connection(uv_stream_t *server, int status) {
 int main() {
     loop = uv_default_loop();
 
-    int pom=uv_fs_open(loop, &req, "backup.bak", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR, NULL);
+    int pom=uv_fs_open(loop, &req, filename, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR, NULL);
     fd=&pom;
 
     uv_tcp_t server;
